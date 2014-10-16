@@ -1,0 +1,5 @@
+# Created by .gitignore support plugin (hsz.mobi)
+.idea
+.gradle
+local.properties
+db-wrapper-plugin-processor/build

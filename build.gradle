@@ -1,0 +1,25 @@
+subprojects {
+
+    //sourceCompatibility = 1.7
+    group = 'fr.jbanse.annotatedsql.plugin.wrapper'
+    version = '0.1'
+
+    apply plugin: 'java'
+	apply plugin: 'maven'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+            resources {
+                srcDir 'res'
+            }
+        }
+    }
+}

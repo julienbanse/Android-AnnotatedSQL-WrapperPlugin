@@ -1,0 +1,33 @@
+subprojects {
+
+    group = 'fr.jbanse.annotatedsql.plugin'
+    version = '1.0'
+//    name 'annotatedsql-wrapper-plugin'
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+            resources {
+                srcDir 'res'
+            }
+        }
+    }
+
+    artifacts {
+        archives jar
+    }
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+
+}

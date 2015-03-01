@@ -7,18 +7,9 @@ import com.annotatedsql.processor.ProcessorLogger;
 import com.annotatedsql.processor.logger.TagLogger;
 import com.annotatedsql.processor.sql.ISchemaPlugin;
 import com.annotatedsql.processor.sql.TableResult;
-import com.sun.source.tree.AnnotationTree;
-import com.sun.source.tree.AssignmentTree;
-import com.sun.source.tree.ExpressionTree;
-import com.sun.source.tree.NewArrayTree;
-import com.sun.source.tree.VariableTree;
-import com.sun.source.util.TreePathScanner;
-import com.sun.source.util.Trees;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -41,7 +32,6 @@ public class ContentValuesPlugin implements ISchemaPlugin {
     private TagLogger logger;
     private ProcessingEnvironment processingEnv;
     private Configuration cfg = new Configuration();
-    private Trees trees;
     private SchemaMetaContentValues schemaProjections;
 
 
@@ -49,7 +39,6 @@ public class ContentValuesPlugin implements ISchemaPlugin {
     public void init(ProcessingEnvironment processingEnv, ProcessorLogger logger) {
         this.processingEnv = processingEnv;
         this.logger = new TagLogger("ProjectionPlugin", logger);
-        this.trees = Trees.instance(processingEnv);
         cfg.setTemplateLoader(new ClassTemplateLoader(this.getClass(), "/res"));
         schemaProjections = new SchemaMetaContentValues();
     }
@@ -59,13 +48,18 @@ public class ContentValuesPlugin implements ISchemaPlugin {
         this.logger.i("[ContentValues] start processTable" + tableInfo.getTableName());
         ContentValues contentValuesAnnotation = element.getAnnotation(ContentValues.class);
         if (contentValuesAnnotation != null) {
-            List<String> defColumns = new ArrayList<String>();
             TableColumns tableColumns = tableInfo.getTableColumns();
+            String className = element.getSimpleName().toString();
+            ContentValuesMeta contentValuesMeta = new ContentValuesMeta(className);
             for (Map.Entry<String, String> e : tableColumns.getColumn2Variable().entrySet()) {
-                defColumns.add(e.getValue());
-                this.logger.i("[ContentValues] processTable add column " + e.getKey() + " - " + e.getValue());
+                String column = e.getValue();
+                ColumnMeta columnMeta = new ColumnMeta(column, className + "." + column, tableColumns.getSqlType(e.getKey()));
+                this.logger.i("[ContentValues] addColumns2Projection: " + className + "." + column + ": type = " + columnMeta.getType());
+                contentValuesMeta.addColumn(columnMeta);
             }
-            parseTableForContentValues(element, defColumns);
+            if (!contentValuesMeta.isEmpty()) {
+                schemaProjections.addContentValues(contentValuesMeta);
+            }
         }
         this.logger.i("[ContentValues] end processTable" + tableInfo.getTableName());
 
@@ -87,27 +81,8 @@ public class ContentValuesPlugin implements ISchemaPlugin {
         schemaProjections.setPkgName(model.getPkgName());
         schemaProjections.setStoreClassName(model.getStoreClassName());
         schemaProjections.setSchemaClassName(model.getClassName());
-//        schemaProjections.setProviderClass(providerClass);
         generateSchemaContentValues();
         this.logger.i("[ContentValues] end processSchema " + model.getClassName());
-    }
-
-    private void parseTableForContentValues(TypeElement element, List<String> defaultColumns) {
-        String className = element.getSimpleName().toString();
-        ContentValuesMeta contentValuesMeta = new ContentValuesMeta(className);
-        addColumns2Projection(className, contentValuesMeta, defaultColumns);
-
-        if (!contentValuesMeta.isEmpty()) {
-            schemaProjections.addContentValues(contentValuesMeta);
-        }
-    }
-
-    private void addColumns2Projection(String className, ContentValuesMeta contentValuesMeta, List<String> columns) {
-        for (String c : columns) {
-            ColumnMeta columnMeta = new ColumnMeta(c, className + "." + c);
-            this.logger.i("[ContentValues] addColumns2Projection: " + className + "." + c);
-            contentValuesMeta.addColumn(columnMeta);
-        }
     }
 
     private void generateSchemaContentValues() {
@@ -158,29 +133,5 @@ public class ContentValuesPlugin implements ISchemaPlugin {
             logger.e("[AbstractContentValues] EntityProcessor TemplateException: ", e);
         }
         this.logger.i("[AbstractContentValues] generateAbstractContentValues end");
-    }
-
-    private static class CodeAnalyzerTreeScanner extends TreePathScanner<List<String>, Trees> {
-
-        @Override
-        public List<String> visitVariable(VariableTree variableTree, Trees trees) {
-            List<String> columns = new ArrayList<String>();
-            List<? extends AnnotationTree> annotationTrees = variableTree.getModifiers().getAnnotations();
-            for (AnnotationTree a : annotationTrees) {
-                for (ExpressionTree e : a.getArguments()) {
-                    AssignmentTree assign = (AssignmentTree) e;
-                    ExpressionTree value = assign.getExpression();
-                    if (value instanceof NewArrayTree) {
-                        NewArrayTree newArrayTree = (NewArrayTree) assign.getExpression();
-                        for (ExpressionTree i : newArrayTree.getInitializers()) {
-                            columns.add(i.toString());
-                        }
-                    } else {
-                        columns.add(value.toString());
-                    }
-                }
-            }
-            return columns;
-        }
     }
 }

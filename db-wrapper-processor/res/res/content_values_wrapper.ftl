@@ -14,9 +14,46 @@ public class ${name} extends AbstractContentValues {
     }
 
     <#list column as col>
+        <#switch col.type>
+        <#case 'INTEGER'>
+    public ${name} put${col.baseName}(int value) {
+        return put${col.baseName}(Integer.valueOf(value));
+    }
+
+    public ${name} put${col.baseName}(Integer value) {
+        mContentValues.put(${col.expr}, value);
+        return this;
+    }
+
+    public ${name} put${col.baseName}(long value) {
+        return put${col.baseName}(Long.valueOf(value));
+    }
+
+    public ${name} put${col.baseName}(Long value) {
+        mContentValues.put(${col.expr}, value);
+        return this;
+    }
+        <#break>
+        <#case 'REAL'>
+    public ${name} put${col.baseName}(float value) {
+        return put${col.baseName}(Float.valueOf(value));
+    }
+
+    public ${name} put${col.baseName}(Float value) {
+        mContentValues.put(${col.expr}, value);
+        return this;
+    }
+        <#break>
+        <#case 'BLOB'>
+    public ${name} put${col.baseName}(byte[] value) {
+        return put${col.baseName}(value);
+    }
+        <#break>
+        <#default>
     public ${name} put${col.baseName}(String value) {
         mContentValues.put(${col.expr}, value);
         return this;
     }
+        </#switch>
     </#list>
 }

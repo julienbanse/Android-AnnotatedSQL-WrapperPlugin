@@ -24,6 +24,10 @@ import java.util.List;
  */
 public class ContentValuesMeta {
 
+    private final boolean mMustGenerateMethodsForInt;
+    private final boolean mMustGenerateMethodsForLong;
+    private final boolean mMustGenerateMethodsForFloat;
+    private final boolean mMustGenerateMethodsForDouble;
     private final String mTableName;
     private String mPkgName;
 
@@ -35,7 +39,14 @@ public class ContentValuesMeta {
 
     private final List<ColumnMeta> mColumnMetas = new ArrayList<ColumnMeta>();
 
-    public ContentValuesMeta(String name) {
+    public ContentValuesMeta(String name, boolean mustGenerateMethodsForInt,
+                             boolean mustGenerateMethodsForLong,
+                             boolean mustGenerateMethodsForFloat,
+                             boolean mustGenerateMethodsForDouble) {
+        mMustGenerateMethodsForInt = mustGenerateMethodsForInt;
+        mMustGenerateMethodsForLong = mustGenerateMethodsForLong;
+        mMustGenerateMethodsForFloat = mustGenerateMethodsForFloat;
+        mMustGenerateMethodsForDouble = mustGenerateMethodsForDouble;
         mTableName = name;
         this.mName = name + "ContentValues";
     }
@@ -78,6 +89,22 @@ public class ContentValuesMeta {
             return;
         }
         mColumnMetas.add(c);
+    }
+
+    public boolean mustGenerateMethodsForInt() {
+        return mMustGenerateMethodsForInt;
+    }
+
+    public boolean mustGenerateMethodsForLong() {
+        return mMustGenerateMethodsForLong;
+    }
+
+    public boolean mustGenerateMethodsForFloat() {
+        return mMustGenerateMethodsForFloat;
+    }
+
+    public boolean mustGenerateMethodsForDouble() {
+        return mMustGenerateMethodsForDouble;
     }
 
     public boolean isEmpty() {

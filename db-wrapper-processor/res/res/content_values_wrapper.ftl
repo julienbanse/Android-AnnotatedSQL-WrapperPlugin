@@ -59,7 +59,7 @@ public class ${name} extends AbstractContentValues {
     }
         <#break>
         <#default>
-    public ${name} put${col.baseName}(String value) {
+    public ${name} put${col.baseName}(CharSequence value) {
         mContentValues.put(${col.expr}, value);
         return this;
     }

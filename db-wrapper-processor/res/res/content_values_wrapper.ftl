@@ -43,6 +43,15 @@ public class ${name} extends AbstractContentValues {
         mContentValues.put(${col.expr}, value);
         return this;
     }
+
+    public ${name} put${col.baseName}(double value) {
+        return put${col.baseName}(Double.valueOf(value));
+    }
+
+    public ${name} put${col.baseName}(Double value) {
+        mContentValues.put(${col.expr}, value);
+        return this;
+    }
         <#break>
         <#case 'BLOB'>
     public ${name} put${col.baseName}(byte[] value) {

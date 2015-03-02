@@ -66,7 +66,11 @@ public class ContentValuesPlugin implements ISchemaPlugin {
         if (contentValuesAnnotation != null) {
             TableColumns tableColumns = tableInfo.getTableColumns();
             String className = element.getSimpleName().toString();
-            ContentValuesMeta contentValuesMeta = new ContentValuesMeta(className);
+            ContentValuesMeta contentValuesMeta = new ContentValuesMeta(className,
+                    contentValuesAnnotation.useInt(),
+                    contentValuesAnnotation.useLong(),
+                    contentValuesAnnotation.useFloat(),
+                    contentValuesAnnotation.useDouble());
             for (Map.Entry<String, String> e : tableColumns.getColumn2Variable().entrySet()) {
                 String column = e.getValue();
                 ColumnMeta columnMeta = new ColumnMeta(column, className + "." + column, tableColumns.getSqlType(e.getKey()));
@@ -133,7 +137,7 @@ public class ContentValuesPlugin implements ISchemaPlugin {
     private void generateAbstractContentValues(SchemaMetaContentValues model) {
         this.logger.i("[AbstractContentValues] generateAbstractContentValues");
         try {
-            ContentValuesMeta contentValuesMeta = new ContentValuesMeta("Abstract");
+            ContentValuesMeta contentValuesMeta = new ContentValuesMeta("Abstract", false, false, false, false);
             contentValuesMeta.setPkgName(model.getPkgName());
             String className = contentValuesMeta.getPkgName() + "." + contentValuesMeta.getName();
             JavaFileObject file = processingEnv.getFiler().createSourceFile(className);

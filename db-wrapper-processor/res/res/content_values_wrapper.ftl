@@ -16,6 +16,7 @@ public class ${name} extends AbstractContentValues {
     <#list column as col>
         <#switch col.type>
         <#case 'INTEGER'>
+            <#if mustGenerateMethodsForInt()>
     public ${name} put${col.baseName}(int value) {
         return put${col.baseName}(Integer.valueOf(value));
     }
@@ -24,7 +25,8 @@ public class ${name} extends AbstractContentValues {
         mContentValues.put(${col.expr}, value);
         return this;
     }
-
+            </#if>
+            <#if mustGenerateMethodsForLong()>
     public ${name} put${col.baseName}(long value) {
         return put${col.baseName}(Long.valueOf(value));
     }
@@ -33,8 +35,10 @@ public class ${name} extends AbstractContentValues {
         mContentValues.put(${col.expr}, value);
         return this;
     }
+            </#if>
         <#break>
         <#case 'REAL'>
+        <#if mustGenerateMethodsForFloat()>
     public ${name} put${col.baseName}(float value) {
         return put${col.baseName}(Float.valueOf(value));
     }
@@ -43,7 +47,8 @@ public class ${name} extends AbstractContentValues {
         mContentValues.put(${col.expr}, value);
         return this;
     }
-
+        </#if>
+        <#if mustGenerateMethodsForDouble()>
     public ${name} put${col.baseName}(double value) {
         return put${col.baseName}(Double.valueOf(value));
     }
@@ -52,6 +57,7 @@ public class ${name} extends AbstractContentValues {
         mContentValues.put(${col.expr}, value);
         return this;
     }
+        </#if>
         <#break>
         <#case 'BLOB'>
     public ${name} put${col.baseName}(byte[] value) {
@@ -59,7 +65,7 @@ public class ${name} extends AbstractContentValues {
     }
         <#break>
         <#default>
-    public ${name} put${col.baseName}(CharSequence value) {
+    public ${name} put${col.baseName}(String value) {
         mContentValues.put(${col.expr}, value);
         return this;
     }

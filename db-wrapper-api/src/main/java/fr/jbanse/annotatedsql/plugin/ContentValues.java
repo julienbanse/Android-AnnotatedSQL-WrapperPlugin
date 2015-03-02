@@ -25,4 +25,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ContentValues {
 
+    boolean useInt() default true;
+
+    boolean useLong() default true;
+
+    boolean useFloat() default true;
+
+    boolean useDouble() default true;
 }

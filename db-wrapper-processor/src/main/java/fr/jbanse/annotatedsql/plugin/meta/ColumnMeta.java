@@ -20,33 +20,43 @@ import com.annotatedsql.annotation.sql.Column;
 import com.annotatedsql.util.TextUtils;
 
 /**
- * Created by hamsterksu on 19.10.2014.
+ * Metadata for a column.
  */
 public class ColumnMeta {
 
-    private final String baseName;
-    private final String name;
+    /**
+     * Camelcase name.
+     */
+    private final String mBaseName;
+
+    /**
+     *
+     */
+    private final String mName;
+    /**
+     * column SQL Type
+     */
     private final Column.Type mType;
 
-    private final String expr;
+    private final String mExpr;
 
     public ColumnMeta(String name, String expr, Column.Type type) {
-        baseName = TextUtils.var2class(TextUtils.capitalize(name.toLowerCase()));
-        this.name = name.toUpperCase();
-        this.expr = expr;
+        mBaseName = TextUtils.var2class(TextUtils.capitalize(name.toLowerCase()));
+        mName = name.toUpperCase();
+        mExpr = expr;
         mType = type;
     }
 
     public String getBaseName() {
-        return baseName;
+        return mBaseName;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public String getExpr() {
-        return expr;
+        return mExpr;
     }
 
     public String getType() {

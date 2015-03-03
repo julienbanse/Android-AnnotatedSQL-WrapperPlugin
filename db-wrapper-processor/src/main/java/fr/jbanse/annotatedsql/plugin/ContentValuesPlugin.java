@@ -100,11 +100,13 @@ public class ContentValuesPlugin implements ISchemaPlugin {
         this.logger.i("[ContentValues] start processSchema " + model.getClassName());
         schemaProjections.setPkgName(model.getPkgName());
         schemaProjections.setStoreClassName(model.getStoreClassName());
-        schemaProjections.setSchemaClassName(model.getClassName());
         generateSchemaContentValues();
         this.logger.i("[ContentValues] end processSchema " + model.getClassName());
     }
 
+    /**
+     * generate all classes
+     */
     private void generateSchemaContentValues() {
         generateAbstractContentValues(schemaProjections);
         for (ContentValuesMeta meta : schemaProjections.getContentValuesMeta()) {
@@ -114,6 +116,10 @@ public class ContentValuesPlugin implements ISchemaPlugin {
         }
     }
 
+    /**
+     * generate contentvalue wrapper class for a table with its meta.
+     * @param contentValuesMeta
+     */
     private void generateContentValues(ContentValuesMeta contentValuesMeta) {
         this.logger.i("[ContentValues] generateContentValues");
         String className = contentValuesMeta.getPkgName() + "." + contentValuesMeta.getName();
@@ -134,6 +140,10 @@ public class ContentValuesPlugin implements ISchemaPlugin {
         this.logger.i("[ContentValues] generateContentValues end");
     }
 
+    /**
+     * generate parent class for content values classes.
+     * @param model
+     */
     private void generateAbstractContentValues(SchemaMetaContentValues model) {
         this.logger.i("[AbstractContentValues] generateAbstractContentValues");
         try {

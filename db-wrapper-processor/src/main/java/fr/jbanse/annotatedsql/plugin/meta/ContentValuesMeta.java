@@ -21,24 +21,65 @@ import java.util.List;
 
 /**
  * Created by julien on 25/02/2015.
+ * Meta class to describe contentvalues annotation associate to @Table column content.
  */
 public class ContentValuesMeta {
 
+    /**
+     * filter to generate wrapper method with int or Integer parameter.
+     */
     private final boolean mMustGenerateMethodsForInt;
+    /**
+     * filter to generate wrapper method with long or Long parameter.
+     */
     private final boolean mMustGenerateMethodsForLong;
+
+    /**
+     * filter to generate wrapper method with float or Float parameter.
+     */
     private final boolean mMustGenerateMethodsForFloat;
+
+    /**
+     * filter to generate wrapper method with double or Double parameter.
+     */
     private final boolean mMustGenerateMethodsForDouble;
+
+    /**
+     * associated table name.
+     */
     private final String mTableName;
+
+    /**
+     * conent values package name.
+     */
     private String mPkgName;
 
+    /**
+     * contentvalues class name.
+     */
     private final String mName;
 
     private String mStoreName;
 
+    /**
+     * table package
+     */
     private String mTablePackage;
 
+    /**
+     * column meta of table.
+     */
     private final List<ColumnMeta> mColumnMetas = new ArrayList<ColumnMeta>();
 
+    /**
+     * default constructor for ContentValues class description.
+     *
+     * @param name
+     * @param mustGenerateMethodsForInt
+     * @param mustGenerateMethodsForLong
+     * @param mustGenerateMethodsForFloat
+     * @param mustGenerateMethodsForDouble
+     */
     public ContentValuesMeta(String name, boolean mustGenerateMethodsForInt,
                              boolean mustGenerateMethodsForLong,
                              boolean mustGenerateMethodsForFloat,

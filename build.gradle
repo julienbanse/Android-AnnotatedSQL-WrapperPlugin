@@ -1,11 +1,10 @@
 subprojects {
 
-    group = 'com.github.julienbanse.annotatedsql.plugin'
-    version = '1.0.0'
-    archivesBaseName = 'annotatedsql-wrapper-plugin'
+//    group = 'com.github.julienbanse'
+//    version = '1.0.0'
+//    artifactId = 'annotatedsql-wrapper-plugin'
 
     apply plugin: 'java'
-    apply plugin: 'maven'
 
     repositories {
         mavenCentral()
@@ -22,12 +21,7 @@ subprojects {
         }
     }
 
-    artifacts {
-        archives jar
-    }
-
-    jar {
-        manifest.attributes provider: 'gradle'
-    }
 
 }
+
+apply from: "maven_push.gradle"

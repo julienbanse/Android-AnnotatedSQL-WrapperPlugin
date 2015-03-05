@@ -1,8 +1,8 @@
 subprojects {
 
-    group = 'fr.jbanse.annotatedsql.plugin'
+    group = 'com.github.julienbanse.annotatedsql.plugin'
     version = '1.0.0'
-//    name 'annotatedsql-wrapper-plugin'
+    archivesBaseName = 'annotatedsql-wrapper-plugin'
 
     apply plugin: 'java'
     apply plugin: 'maven'

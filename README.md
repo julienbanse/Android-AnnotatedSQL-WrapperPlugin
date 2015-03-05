@@ -73,7 +73,7 @@ All methods will be generated with Android-AnnotatedSQL types :
 Like other libs, add plugin to your dependencies:
 
 `dependencies {
-	compile "fr.jbanse.annotatedsql.plugin:db-wrapper-api:1.0.0"
+	compile "com.github.julienbanse:db-wrapper-api:1.0.0"
 }`
 
 Very easy way - just use [aptlibs][2] 
@@ -87,8 +87,8 @@ Very easy way - just use [aptlibs][2]
 			plugins {
 				contentValuesPlugin {
                 	version = "1.0.0"
-                	dependencies = ["fr.jbanse.annotatedsql.plugin:db-wrapper-api:${version}",
-                                "fr.jbanse.annotatedsql.plugin:db-wrapper-processor:${version}"]
+                	dependencies = ["com.github.julienbanse:db-wrapper-api:${version}",
+                                "com.github.julienbanse:db-wrapper-processor:${version}"]
                 	plugin = "fr.jbanse.annotatedsql.plugin.ContentValuesPlugin"
             	}
             }

@@ -1,9 +1,5 @@
 subprojects {
 
-//    group = 'com.github.julienbanse'
-//    version = '1.0.0'
-//    artifactId = 'annotatedsql-wrapper-plugin'
-
     apply plugin: 'java'
 
     repositories {

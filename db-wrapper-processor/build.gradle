@@ -8,3 +8,6 @@ dependencies {
     compile 'commons-lang:commons-lang:2.6'
     compile files("${System.properties['java.home']}/../lib/tools.jar")
 }
+
+
+apply from: "../maven_push.gradle"

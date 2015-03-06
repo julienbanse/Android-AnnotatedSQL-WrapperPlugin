@@ -19,5 +19,3 @@ subprojects {
 
 
 }
-
-apply from: "maven_push.gradle"

@@ -3,6 +3,12 @@ Android-AnnotatedSQL-WrapperPlugin
 
 Plugin for annotatedsql [Android-AnnotatedSQL][1].
 
+Last version: 1.1.0
+
+*Release note: add Pool methods (obtain and recycle). **This version must be used with appcompat-v4.***
+
+Previous version: 1.0
+
 *The purpose*
 ----------------
 
@@ -74,7 +80,7 @@ All methods will be generated with Android-AnnotatedSQL types :
 Like other libs, add plugin to your dependencies:
 
 `dependencies {
-	compile "com.github.julienbanse:db-wrapper-api:1.0.0"
+	compile "com.github.julienbanse:db-wrapper-api:1.1.0"
 }`
 
 Very easy way - just use [aptlibs][2] 
@@ -87,7 +93,7 @@ Very easy way - just use [aptlibs][2]
 			logLevel = 'INFO'
 			plugins {
 				contentValuesPlugin {
-                	version = "1.0.0"
+                	version = "1.1.0"
                 	dependencies = ["com.github.julienbanse:db-wrapper-api:${version}",
                                 "com.github.julienbanse:db-wrapper-processor:${version}"]
                 	plugin = "fr.jbanse.annotatedsql.plugin.ContentValuesPlugin"

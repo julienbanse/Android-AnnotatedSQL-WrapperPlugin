@@ -3,8 +3,8 @@ dependencies {
     compile project(':db-wrapper-api')
     compile 'com.github.hamsterksu:android-annotatedsql-api:1.10.3'
     compile 'com.github.hamsterksu:android-annotatedsql-processor:1.10.3'
-    compile 'org.freemarker:freemarker:2.3.20'
-    compile 'com.google.guava:guava:16.0.1'
+    compile 'org.freemarker:freemarker:2.3.22'
+    compile 'com.google.guava:guava:18.0'
     compile 'commons-lang:commons-lang:2.6'
     compile files("${System.properties['java.home']}/../lib/tools.jar")
 }

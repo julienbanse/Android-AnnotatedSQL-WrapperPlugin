@@ -7,6 +7,8 @@ package ${pkgName};
 
 import ${tablePackage}.${storeName}.${tableName};
 
+import android.support.v4.util.Pools;
+
 public class ${name} extends AbstractContentValues {
 
     private static volatile Pools.SynchronizedPool<${name}> sPool;

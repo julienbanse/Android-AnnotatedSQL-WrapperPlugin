@@ -9,8 +9,41 @@ import ${tablePackage}.${storeName}.${tableName};
 
 public class ${name} extends AbstractContentValues {
 
+    private static volatile Pools.SynchronizedPool<${name}> sPool;
+
     public ${name}() {
         super();
+    }
+
+    private static Pools.SynchronizedPool<${name}> getPool() {
+       if (sPool == null) {
+            synchronized (${name}.class) {
+                if (sPool == null) {
+                    sPool = new Pools.SynchronizedPool<>(10);
+                }
+            }
+       }
+       return sPool;
+    }
+
+    /**
+     * method to get a ${name} instance using a pool to limit instance creation.
+     * if you use this method, do not forget to call method recycle from the obtained instance.
+     * @return ${name} instance
+     */
+    public static ${name} obtain() {
+        ${name} instance = getPool().acquire();
+        return (instance != null) ? instance : new ${name}();
+    }
+
+    /**
+     * this method put this instance in the stack pool.
+     * You must use this method only if you got the instance this method #obtain.
+     * and clear content.
+     */
+    public void recycle() {
+        clear();
+        getPool().release(this);
     }
 
     <#list column as col>

@@ -7,6 +7,7 @@ Plugin for annotatedsql [Android-AnnotatedSQL][1].
 ----------------
 
 Generate ContentValues wrapper classes associated to your table's columns.
+Each generated class can use a pool to limit instance creation. Use the method ``.obtain()`` and ``.recycle()``` to use the pool.
 
 *How can you do it ?*
 ----------------

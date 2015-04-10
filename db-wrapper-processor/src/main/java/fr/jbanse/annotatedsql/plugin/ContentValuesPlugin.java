@@ -39,6 +39,7 @@ import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.Version;
 
 /**
  * Created by julien on 25/02/2015.
@@ -47,7 +48,7 @@ public class ContentValuesPlugin implements ISchemaPlugin {
 
     private TagLogger logger;
     private ProcessingEnvironment processingEnv;
-    private Configuration cfg = new Configuration();
+    private Configuration cfg = new Configuration(new Version(2, 3, 22));
     private SchemaMetaContentValues schemaProjections;
 
 
@@ -118,6 +119,7 @@ public class ContentValuesPlugin implements ISchemaPlugin {
 
     /**
      * generate contentvalue wrapper class for a table with its meta.
+     *
      * @param contentValuesMeta
      */
     private void generateContentValues(ContentValuesMeta contentValuesMeta) {
@@ -142,6 +144,7 @@ public class ContentValuesPlugin implements ISchemaPlugin {
 
     /**
      * generate parent class for content values classes.
+     *
      * @param model
      */
     private void generateAbstractContentValues(SchemaMetaContentValues model) {

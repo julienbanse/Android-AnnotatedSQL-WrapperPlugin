@@ -9,12 +9,22 @@ import ${tablePackage}.${storeName}.${tableName};
 
 import android.support.v4.util.Pools;
 
+import android.content.ContentValues;
+
 public class ${name} extends AbstractContentValues {
 
     private static volatile Pools.SynchronizedPool<${name}> sPool;
 
     public ${name}() {
-        super();
+        this(${column?size});
+    }
+
+    public ${name}(int size) {
+        super(size);
+    }
+
+    public ${name}(ContentValues contentValues) {
+        super(contentValues);
     }
 
     private static Pools.SynchronizedPool<${name}> getPool() {

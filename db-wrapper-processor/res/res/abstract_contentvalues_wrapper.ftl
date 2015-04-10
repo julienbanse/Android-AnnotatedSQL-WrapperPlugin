@@ -11,6 +11,14 @@ abstract class AbstractContentValues {
 
     protected ContentValues mContentValues = new ContentValues();
 
+    public AbstractContentValues(ContentValues contentValues) {
+        mContentValues = new ContentValues(contentValues);
+    }
+
+    public AbstractContentValues(int size) {
+        mContentValues = new ContentValues(size);
+    }
+
     public AbstractContentValues() {
         mContentValues = new ContentValues();
     }
